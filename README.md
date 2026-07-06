@@ -49,24 +49,29 @@ After the data is verified, additional technical indicators are created and any 
 To improve the model's performance, several technical indicators are added to the dataset.
 
 **Trend Indicators**
+
 SMA (20-Day)
 SMA (50-Day)
 EMA (20-Day)
 
 **Momentum Indicators**
+
 RSI (14-Day)
 MACD
 MACD Signal Line
 
 **Volatility Indicators**
+
 ATR (14-Day)
 Bollinger Upper Band
 Bollinger Lower Band
 
 **Volume Indicator**
+
 On Balance Volume (OBV)
 
 **Return-Based Features**
+
 Daily Return
 Log Return
 
