@@ -32,6 +32,7 @@ Volume
 The data spans multiple years, allowing the model to learn long-term market behaviour.
 
 **Data Preprocessing**
+
 Before training the model, the dataset is checked for:
 
 Missing values
@@ -42,6 +43,7 @@ Chronological order of dates
 After the data is verified, additional technical indicators are created and any rows containing missing values generated during feature engineering are removed.
 
 **Feature Engineering**
+
 To improve the model's performance, several technical indicators are added to the dataset.
 
 **Trend Indicators**
@@ -69,10 +71,12 @@ Log Return
 These indicators provide more information about the market than the raw price values alone and help the model identify important patterns.
 
 **Target Variable**
+
 The model predicts the next day's closing price.
 The target column is created by shifting the closing price one day ahead, allowing the model to learn from today's market data to estimate tomorrow's closing price.
 
 **Exploratory Data Analysis**
+
 Several visualizations are created to better understand the dataset, including:
 
 Closing Price Trend
@@ -86,6 +90,7 @@ Actual vs Predicted Closing Prices
 These graphs help identify trends, relationships between variables, and unusual observations in the data.
 
 **Machine Learning Models**
+
 The following regression models are implemented and compared:
 
 Linear Regression
@@ -96,6 +101,7 @@ Long Short-Term Memory (LSTM)
 Linear Regression serves as a simple baseline model, while the other models are used to capture more complex relationships within the data.
 
 **Model Evaluation**
+
 The performance of each model is evaluated using:
 
 Mean Absolute Error (MAE)
