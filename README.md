@@ -66,36 +66,36 @@ To improve the model's performance, several technical indicators are added to th
 
 ### **Trend Indicators**
 
-* **SMA (20-Day):** Used to identify the overall market trend.
-* **SMA (50-Day):** Used to identify long-term price trends.
-* **EMA (20-Day):** Used to detect recent trend changes more quickly.
+SMA (20-Day): Used to identify the overall market trend.
+SMA (50-Day): Used to identify long-term price trends.
+EMA (20-Day): Used to detect recent trend changes more quickly.
 
 ### **Momentum Indicators**
 
-* **RSI (14-Day):** Used to identify overbought and oversold conditions.
-* **MACD:** Used to detect changes in market trends and momentum.
-* **MACD Signal Line:** Used to confirm MACD trend signals.
+RSI (14-Day): Used to identify overbought and oversold conditions.
+MACD: Used to detect changes in market trends and momentum.
+MACD Signal Line: Used to confirm MACD trend signals.
 
 ### **Volatility Indicators**
 
-* **ATR (14-Day):** Used to measure market volatility.
-* **Bollinger Upper Band:** Used to identify when prices are unusually high.
-* **Bollinger Lower Band:** Used to identify when prices are unusually low.
+ATR (14-Day): Used to measure market volatility.
+Bollinger Upper Band: Used to identify when prices are unusually high.
+Bollinger Lower Band: Used to identify when prices are unusually low.
 
 ### **Volume Indicator**
 
-* **On-Balance Volume (OBV):** Used to confirm price trends using trading volume.
+On-Balance Volume (OBV): Used to confirm price trends using trading volume.
 
 ### **Return-Based Features**
 
-* **Daily Return:** Used to measure daily price changes.
-* **Log Return:** Used for financial analysis and machine learning models.
+Daily Return: Used to measure daily price changes.
+Log Return: Used for financial analysis and machine learning models.
 
 ### **Lag Features**
 
-* **Lag 1 Close:** Used to capture the previous day's price movement.
-* **Lag 2 Close:** Used to provide short-term historical context.
-* **Lag 3 Close:** Used to capture recent price trends.
+Lag 1 Close: Used to capture the previous day's price movement.
+Lag 2 Close: Used to provide short-term historical context.
+Lag 3 Close: Used to capture recent price trends.
 
 ## **Target Variable**
 
