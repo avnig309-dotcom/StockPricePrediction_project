@@ -8,30 +8,46 @@ Instead of relying only on the original stock prices, we generate several techni
 
 The project follows a complete machine learning workflow, starting from collecting the data and preparing it for analysis, to training multiple regression models and comparing their performance.
 
+
 **Project Objectives**
 
 Predict the next day's closing price of the NIFTY 50 index.
+
 Analyze historical stock market data.
+
 Create technical indicators to improve prediction accuracy.
+
 Explore trends and patterns through data visualization.
+
 Train and compare different regression models.
+
 Evaluate model performance using standard regression metrics.
-Dataset
+
+
+**Dataset**
 
 The historical stock market data is downloaded from Yahoo Finance using the yfinance library.
 
 Ticker: ^NSEI (NIFTY 50)
 
 The dataset contains the following columns:
+
 Date
+
 Open
+
 High
+
 Low
+
 Close
+
 Adjusted Close
+
 Volume
 
 The data spans multiple years, allowing the model to learn long-term market behaviour.
+
 
 **Data Preprocessing**
 
@@ -51,19 +67,25 @@ To improve the model's performance, several technical indicators are added to th
 **Trend Indicators**
 
 SMA (20-Day)
+
 SMA (50-Day)
+
 EMA (20-Day)
 
 **Momentum Indicators**
 
 RSI (14-Day)
+
 MACD
+
 MACD Signal Line
 
 **Volatility Indicators**
 
 ATR (14-Day)
+
 Bollinger Upper Band
+
 Bollinger Lower Band
 
 **Volume Indicator**
@@ -73,6 +95,7 @@ On Balance Volume (OBV)
 **Return-Based Features**
 
 Daily Return
+
 Log Return
 
 These indicators provide more information about the market than the raw price values alone and help the model identify important patterns.
@@ -80,6 +103,7 @@ These indicators provide more information about the market than the raw price va
 **Target Variable**
 
 The model predicts the next day's closing price.
+
 The target column is created by shifting the closing price one day ahead, allowing the model to learn from today's market data to estimate tomorrow's closing price.
 
 **Exploratory Data Analysis**
@@ -87,11 +111,17 @@ The target column is created by shifting the closing price one day ahead, allowi
 Several visualizations are created to better understand the dataset, including:
 
 Closing Price Trend
+
 Trading Volume Trend
+
 Distribution of Closing Prices
+
 Correlation Heatmap
+
 Boxplots for Outlier Detection
+
 Daily Return Distribution
+
 Actual vs Predicted Closing Prices
 
 These graphs help identify trends, relationships between variables, and unusual observations in the data.
@@ -101,8 +131,11 @@ These graphs help identify trends, relationships between variables, and unusual 
 The following regression models are implemented and compared:
 
 Linear Regression
+
 Random Forest Regressor
+
 XGBoost Regressor
+
 Long Short-Term Memory (LSTM)
 
 Linear Regression serves as a simple baseline model, while the other models are used to capture more complex relationships within the data.
@@ -112,22 +145,34 @@ Linear Regression serves as a simple baseline model, while the other models are 
 The performance of each model is evaluated using:
 
 Mean Absolute Error (MAE)
+
 Mean Squared Error (MSE)
+
 Root Mean Squared Error (RMSE)
+
 R² Score
 
 These metrics help compare how accurately each model predicts the next day's closing price.
 
 **Tools and Libraries**
 Python
+
 Pandas
+
 NumPy
+
 Matplotlib
+
 Seaborn
+
 yfinance
+
 Scikit-learn
+
 XGBoost
+
 TensorFlow / Keras
+
 TA (Technical Analysis Library)
 
 **Future Improvements**
@@ -135,6 +180,13 @@ TA (Technical Analysis Library)
 Some possible improvements to this project include:
 
 Using live stock market data for real-time predictions.
+
 Including news sentiment and economic indicators.
+
 Fine-tuning model parameters for better performance.
+
 Deploying the model as a web application.
+
+**Note:** 
+
+This project is intended for educational purposes to demonstrate the application of machine learning in financial data analysis. Since stock prices are influenced by many unpredictable factors, the model's predictions should not be considered financial or investment advice.
