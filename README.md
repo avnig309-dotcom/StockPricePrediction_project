@@ -1,6 +1,7 @@
 **Stock Price Prediction Using Machine Learning**
 
 **About the Project**
+
 The stock market is influenced by many factors, making it difficult to predict future prices accurately. In this project, we use Machine Learning to predict the next day's closing price of the NIFTY 50 index using historical stock market data.
 
 Instead of relying only on the original stock prices, we generate several technical indicators such as Moving Averages, RSI, MACD, Bollinger Bands, and ATR. These indicators help the model understand market trends, momentum, and volatility more effectively.
@@ -8,6 +9,7 @@ Instead of relying only on the original stock prices, we generate several techni
 The project follows a complete machine learning workflow, starting from collecting the data and preparing it for analysis, to training multiple regression models and comparing their performance.
 
 **Project Objectives**
+
 Predict the next day's closing price of the NIFTY 50 index.
 Analyze historical stock market data.
 Create technical indicators to improve prediction accuracy.
