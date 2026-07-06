@@ -64,41 +64,38 @@ After the data is verified, additional technical indicators are created and any 
 
 To improve the model's performance, several technical indicators are added to the dataset.
 
-## **Trend Indicators**
+### **Trend Indicators**
 
-SMA (20-Day)
+* **SMA (20-Day):** Used to identify the overall market trend.
+* **SMA (50-Day):** Used to identify long-term price trends.
+* **EMA (20-Day):** Used to detect recent trend changes more quickly.
 
-SMA (50-Day)
+### **Momentum Indicators**
 
-EMA (20-Day)
+* **RSI (14-Day):** Used to identify overbought and oversold conditions.
+* **MACD:** Used to detect changes in market trends and momentum.
+* **MACD Signal Line:** Used to confirm MACD trend signals.
 
-## **Momentum Indicators**
+### **Volatility Indicators**
 
-RSI (14-Day)
+* **ATR (14-Day):** Used to measure market volatility.
+* **Bollinger Upper Band:** Used to identify when prices are unusually high.
+* **Bollinger Lower Band:** Used to identify when prices are unusually low.
 
-MACD
+### **Volume Indicator**
 
-MACD Signal Line
+* **On-Balance Volume (OBV):** Used to confirm price trends using trading volume.
 
-## **Volatility Indicators**
+### **Return-Based Features**
 
-ATR (14-Day)
+* **Daily Return:** Used to measure daily price changes.
+* **Log Return:** Used for financial analysis and machine learning models.
 
-Bollinger Upper Band
+### **Lag Features**
 
-Bollinger Lower Band
-
-## **Volume Indicator**
-
-On Balance Volume (OBV)
-
-## **Return-Based Features**
-
-Daily Return
-
-Log Return
-
-These indicators provide more information about the market than the raw price values alone and help the model identify important patterns.
+* **Lag 1 Close:** Used to capture the previous day's price movement.
+* **Lag 2 Close:** Used to provide short-term historical context.
+* **Lag 3 Close:** Used to capture recent price trends.
 
 ## **Target Variable**
 
