@@ -47,9 +47,9 @@ Headlines from both sources are combined into a single timeline, sentiment-score
 Before anything is modeled, the dataset goes through a cleanup pass:
 
 - Checking for missing values and duplicate records
-- Verifying correct data types (particularly making sure date columns are true `datetime` objects, not strings — a subtle but common source of merge failures)
+- Verifying correct data types (particularly making sure date columns are true `datetime` objects, not strings, which is a common cause of merge failure
 - Confirming the data is sorted in chronological order
-- Removing rows with zero trading volume (holidays/non-trading days that slip into the raw download)
+- Removing rows with zero trading volume (holidays/non-trading days that slip into the raw data)
 
 Once verified, technical indicators are engineered on top of the cleaned data, and any rows with missing values introduced by rolling-window calculations (e.g., the first 19 days before a 20-day moving average can be computed) are dropped.
 
