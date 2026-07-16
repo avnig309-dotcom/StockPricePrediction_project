@@ -38,7 +38,7 @@ Together, the full price dataset contains: Date, Open, High, Low, Close, Adjuste
 
 **News data** — since price and volume alone can't capture *why* the market moved on a given day, we pulled in two supplementary datasets from Kaggle:
 - **NifSent50**, a dataset of financial headlines tied to NIFTY 50 constituent companies
-- **FindKG (GDELT-based)**, a broader financial news and mentions dataset covering 2025–2026
+- **FindKG (GDELT-based)**, a broader financial news and mentions dataset 
 
 Headlines from both sources are combined into a single timeline, sentiment-scored, and merged into the main dataset by date.
 
