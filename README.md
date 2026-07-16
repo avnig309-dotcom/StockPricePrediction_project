@@ -1,201 +1,141 @@
-# **Stock Price Prediction Using Machine Learning**
+# Stock Price Prediction Using Machine Learning
 
-## **About the Project**
+## About the Project
 
-The stock market is influenced by many factors, making it difficult to predict future prices accurately. In this project, we use Machine Learning to predict the next day's closing price of the NIFTY 50 index using historical stock market data.
+The stock market is shaped by a mix of factors — company performance, global markets, investor sentiment, and plain randomness — which makes it notoriously hard to predict. This project aims at predicting the next day's closing price of the NIFTY 50 index using historical market data, technical indicators, and news sentiment.
 
-Instead of relying only on the original stock prices, we generate several technical indicators such as Moving Averages, RSI, MACD, Bollinger Bands, and ATR. These indicators help the model understand market trends, momentum, and volatility more effectively.
+Rather than feeding raw prices straight into a model, we build out a richer feature set: moving averages, RSI, MACD, Bollinger Bands, ATR, and — going a step further — a daily sentiment score derived from financial news headlines. The idea is that price action alone only tells half the story; how the market is *talking* about a stock or index on a given day carries information too.
 
-The project follows a complete machine learning workflow, starting from collecting the data and preparing it for analysis, to training multiple regression models and comparing their performance.
+The project follows a full ML workflow: collecting and cleaning the data, engineering features (including sentiment), exploring it visually, training several regression models, and comparing how each one performs.
 
+## Project Objectives
 
-## **Project Objectives**
+- Predict the next day's closing price of the NIFTY 50 index
+- Analyse historical stock market data and identify patterns
+- Engineer technical indicators that capture trend, momentum, and volatility
+- Incorporate news sentiment as an additional predictive signal
+- Explore the data visually to surface trends and relationships
+- Train and compare multiple regression models
+- Evaluate each model with standard regression metrics
 
-Predict the next day's closing price of the NIFTY 50 index.
+## Datasets
 
-Analyze historical stock market data.
+**Price data** — downloaded via the `yfinance` library.
+- Primary ticker: `^NSEI` (NIFTY 50)
 
-Create technical indicators to improve prediction accuracy.
+Since Indian equity markets don't move in isolation from global markets, commodities, and currency movements, six supporting instruments are downloaded the same way and merged into the main dataset by date:
 
-Explore trends and patterns through data visualization.
+- **India VIX** (`^INDIAVIX`) — reflects expected near-term volatility in Indian equities
+- **S&P 500** (`^GSPC`) — tracks U.S. market sentiment, which frequently spills over into Asian markets the next trading session
+- **Nasdaq** (`^IXIC`) — heavily tech-weighted, relevant given how much of NIFTY 50's movement is tied to IT and tech-adjacent stocks
+- **Gold Futures** (`GC=F`) — a traditional safe-haven asset; gold prices often move inversely to equity risk appetite
+- **Crude Oil Futures** (`CL=F`) — India is a major oil importer, so crude price swings directly affect inflation expectations and corporate costs across sectors
+- **USD/INR Exchange Rate** (`USDINR=X`) — currency depreciation/appreciation affects import costs, foreign investment flows, and IT/export-sector earnings
 
-Train and compare different regression models.
+Each of these contributes its own `Close` price, merged in as a separate column (e.g., `Close vix`, `Close snp`) alongside the main NIFTY 50 OHLCV data.
 
-Evaluate model performance using standard regression metrics.
+Together, the full price dataset contains: Date, Open, High, Low, Close, Adjusted Close, Volume, and the six supporting `Close` columns above, spanning from 2013 through mid-2026 — long enough for a model to pick up on longer-term market behavior, not just short-term noise.
 
+**News data** — since price and volume alone can't capture *why* the market moved on a given day, we pulled in two supplementary datasets from Kaggle:
+- **NifSent50**, a dataset of financial headlines tied to NIFTY 50 constituent companies
+- **FindKG (GDELT-based)**, a broader financial news and mentions dataset covering 2025–2026
 
-## **Dataset**
+Headlines from both sources are combined into a single timeline, sentiment-scored, and merged into the main dataset by date.
 
-The historical stock market data is downloaded from Yahoo Finance using the yfinance library.
+## Data Preprocessing
 
-Ticker: ^NSEI (NIFTY 50)
+Before anything is modeled, the dataset goes through a cleanup pass:
 
-The dataset contains the following columns:
+- Checking for missing values and duplicate records
+- Verifying correct data types (particularly making sure date columns are true `datetime` objects, not strings — a subtle but common source of merge failures)
+- Confirming the data is sorted in chronological order
+- Removing rows with zero trading volume (holidays/non-trading days that slip into the raw download)
 
-Date
+Once verified, technical indicators are engineered on top of the cleaned data, and any rows with missing values introduced by rolling-window calculations (e.g., the first 19 days before a 20-day moving average can be computed) are dropped.
 
-Open
+## Feature Engineering
 
-High
+### Trend Indicators
+- **SMA (20-Day)** — smooths out short-term noise to reveal the underlying trend
+- **SMA (50-Day)** — a longer lens for spotting sustained trends
+- **EMA (20-Day)** — weights recent prices more heavily, so it reacts faster to fresh trend changes than a simple average would
 
-Low
+### Momentum Indicators
+- **RSI (14-Day)** — flags overbought or oversold conditions
+- **MACD** — tracks the relationship between two EMAs to catch shifts in momentum
+- **MACD Signal Line** — a smoothed version of MACD used to confirm those shifts rather than react to every wiggle
 
-Close
+### Volatility Indicators
+- **ATR (14-Day)** — measures how much the price is swinging, regardless of direction
+- **Bollinger Bands (Upper/Lower)** — built from a 20-day moving average plus/minus two standard deviations, they widen during volatile stretches and narrow when the market calms down
 
-Adjusted Close
+### Volume Indicator
+- **On-Balance Volume (OBV)** — accumulates volume in the direction of price movement, used to confirm whether a price trend has real conviction behind it
 
-Volume
+### Return-Based Features
+- **Daily Return** — the simple day-over-day percentage change
+- **Log Return** — the log-transformed version, which behaves better statistically for financial time series and is standard in most quant modeling
 
-The data spans multiple years, allowing the model to learn long-term market behaviour.
+### Lag Features
+- **Lag 1 / Lag 2 / Lag 3 Close** — the closing prices from the previous 1, 2, and 3 days, giving the model direct short-term historical context rather than relying solely on rolling-window indicators
 
+### News Sentiment Feature
+- **Average Daily Sentiment** — headlines from NifSent50 and FindKG are cleaned, combined, and sorted chronologically from 2013 onward, then scored using VADER (a rule-based sentiment analysis tool tuned for short text like headlines and social media). Since multiple headlines can land on the same day, scores are averaged into a single daily value before merging into the main dataset by date. Days with no matching news default to a neutral (0) score, so the absence of news doesn't get mistaken for negative sentiment.
 
-## **Data Preprocessing**
+## Target Variable
 
-Before training the model, the dataset is checked for:
+The model predicts **tomorrow's closing price**, created by shifting the `Close` column back by one day. In other words, each row's features (today's prices, indicators, and sentiment) are paired with the label of what the closing price turns out to be the next trading day — that's the supervised learning signal the model learns from.
 
-Missing values
+## Exploratory Data Analysis
 
-Duplicate records
+A handful of visualizations help build intuition about the data before modelling:
 
-Correct data types
+- Closing price trend over time
+- Trading volume trend
+- Distribution of closing prices
+- Correlation heatmap (useful for spotting redundant or highly collinear features)
+- Boxplots for outlier detection
+- Daily return distribution
+- Actual vs. predicted closing prices (post-modelling)
 
-Chronological order of dates
+## Machine Learning Models
 
-After the data is verified, additional technical indicators are created and any rows containing missing values generated during feature engineering are removed.
+Four models are trained and compared:
 
-## **Feature Engineering**
+- **Linear Regression** — a simple baseline to measure whether the more complex models are actually adding value
+- **Random Forest Regressor** — captures non-linear relationships between features without much tuning
+- **XGBoost Regressor** — a gradient-boosted tree model, typically strong on tabular/structured data like this
+- **LSTM (Long Short-Term Memory)** — a recurrent neural network suited to sequential data, tested here to see if it captures temporal patterns the tree-based models miss
 
-To improve the model's performance, several technical indicators are added to the dataset.
+## Model Evaluation
 
-### **Trend Indicators**
+Each model's predictions are scored using:
 
-SMA (20-Day): Identifies the overall market trend.
+- **MAE** (Mean Absolute Error) — average magnitude of error, in the same units as price
+- **MSE** (Mean Squared Error) — penalises larger errors more heavily
+- **RMSE** (Root Mean Squared Error) — same penalty behaviour as MSE, but back in interpretable price units
+- **R² Score** — how much of the variance in closing price the model explains
 
-SMA (50-Day): For identifying long-term price trends.
+## Tools and Libraries
 
-EMA (20-Day): To detect recent trend changes more quickly.
+- Python
+- Pandas, NumPy
+- Matplotlib, Seaborn
+- yfinance
+- Scikit-learn
+- XGBoost
+- TensorFlow / Keras
+- TA (Technical Analysis Library)
+- VADER (vaderSentiment) — for news sentiment scoring
+- kagglehub — for pulling the news datasets
 
-### **Momentum Indicators**
+## Future Improvements
 
-RSI (14-Day): Identifies overbought and oversold conditions.
+- Using live, real-time stock and news data instead of static historical pulls
+- Expanding sentiment analysis beyond VADER to a transformer-based model (e.g., FinBERT) for more nuanced financial-language understanding
+- Fine-tuning model hyperparameters more rigorously (grid search / Bayesian optimisation)
+- Deploying the model as a web application for live predictions
 
-MACD: Detects changes in market trends and momentum.
+### Note
 
-MACD Signal Line: To confirm MACD trend signals.
-
-### **Volatility Indicators**
-
-ATR (14-Day): Measures market volatility.
-
-Bollinger Upper Band: Used to identify when prices are unusually high.
-
-Bollinger Lower Band: Used to identify when prices are unusually low.
-
-### **Volume Indicator**
-
-On-Balance Volume (OBV): Confirms price trends using trading volume.
-
-### **Return-Based Features**
-
-Daily Return: To measure daily price changes.
-
-Log Return: Used for financial analysis and machine learning models.
-
-### **Lag Features**
-
-Lag 1 Close: To capture the previous day's price movement.
-
-Lag 2 Close: To provide short-term historical context.
-
-Lag 3 Close: To capture recent price trends.
-
-## **Target Variable**
-
-The model predicts the next day's closing price.
-
-The target column is created by shifting the closing price one day ahead, allowing the model to learn from today's market data to estimate tomorrow's closing price.
-
-## **Exploratory Data Analysis**
-
-Several visualizations are created to better understand the dataset, including:
-
-Closing Price Trend
-
-Trading Volume Trend
-
-Distribution of Closing Prices
-
-Correlation Heatmap
-
-Boxplots for Outlier Detection
-
-Daily Return Distribution
-
-Actual vs Predicted Closing Prices
-
-These graphs help identify trends, relationships between variables, and unusual observations in the data.
-
-## **Machine Learning Models**
-
-The following regression models are implemented and compared:
-
-Linear Regression
-
-Random Forest Regressor
-
-XGBoost Regressor
-
-Long Short-Term Memory (LSTM)
-
-Linear Regression serves as a simple baseline model, while the other models are used to capture more complex relationships within the data.
-
-## **Model Evaluation**
-
-The performance of each model is evaluated using:
-
-Mean Absolute Error (MAE)
-
-Mean Squared Error (MSE)
-
-Root Mean Squared Error (RMSE)
-
-R² Score
-
-These metrics help compare how accurately each model predicts the next day's closing price.
-
-## **Tools and Libraries**
-Python
-
-Pandas
-
-NumPy
-
-Matplotlib
-
-Seaborn
-
-yfinance
-
-Scikit-learn
-
-XGBoost
-
-TensorFlow / Keras
-
-TA (Technical Analysis Library)
-
-## **Future Improvements**
-
-Some possible improvements to this project include:
-
-Using live stock market data for real-time predictions.
-
-Including news sentiment and economic indicators.
-
-Fine-tuning model parameters for better performance.
-
-Deploying the model as a web application.
-
-### **Note:** 
-
-This project is intended for educational purposes to demonstrate the application of machine learning in financial data analysis. Since stock prices are influenced by many unpredictable factors, the model's predictions should not be considered financial or investment advice.
+This project is intended for educational purposes, to demonstrate how machine learning — combined with technical indicators and news sentiment — can be applied to financial data analysis. Stock prices are influenced by countless unpredictable factors, and this model's predictions should not be treated as financial or investment advice.
