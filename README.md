@@ -23,7 +23,7 @@ The project follows a full ML workflow: collecting and cleaning the data, engine
 **Price data** — downloaded via the `yfinance` library.
 - Primary ticker: `^NSEI` (NIFTY 50)
 
-Since Indian equity markets don't move in isolation from global markets, commodities, and currency movements, six supporting instruments are downloaded the same way and merged into the main dataset by date:
+Since Indian equity markets don't move in isolation from global markets, commodities, and currency movements, six supporting stocks are integrated the same way and merged into the main dataset by date:
 
 - **India VIX** (`^INDIAVIX`) — reflects expected near-term volatility in Indian equities
 - **S&P 500** (`^GSPC`) — tracks U.S. market sentiment, which frequently spills over into Asian markets the next trading session
