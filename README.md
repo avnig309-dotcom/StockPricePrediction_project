@@ -59,6 +59,7 @@ Once verified, technical indicators are engineered on top of the cleaned data, a
 - **SMA (20-Day)** — smooths out short-term noise to reveal the underlying trend
 - **SMA (50-Day)** — a longer lens for spotting sustained trends
 - **EMA (20-Day)** — weights recent prices more heavily, so it reacts faster to fresh trend changes than a simple average would
+- **EMA (50-Day)** - reacts more slowly to price changes and reflects the medium-to-longer-term trend rather than short-term swings
 
 ### Momentum Indicators
 - **RSI (14-Day)** — flags overbought or oversold conditions
