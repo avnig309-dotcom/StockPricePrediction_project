@@ -25,12 +25,12 @@ The project follows a full ML workflow: collecting and cleaning the data, engine
 
 Since Indian equity markets don't move in isolation from global markets, commodities, and currency movements, six supporting stocks are integrated the same way and merged into the main dataset by date:
 
-- **India VIX** (`^INDIAVIX`) — reflects expected near-term volatility in Indian equities
-- **S&P 500** (`^GSPC`) — tracks U.S. market sentiment, which frequently spills over into Asian markets the next trading session
-- **Nasdaq** (`^IXIC`) — heavily tech-weighted, relevant given how much of NIFTY 50's movement is tied to IT and tech-adjacent stocks
-- **Gold Futures** (`GC=F`) — a traditional safe-haven asset; gold prices often move inversely to equity risk appetite
-- **Crude Oil Futures** (`CL=F`) — India is a major oil importer, so crude price swings directly affect inflation expectations and corporate costs across sectors
-- **USD/INR Exchange Rate** (`USDINR=X`) — currency depreciation/appreciation affects import costs, foreign investment flows, and IT/export-sector earnings
+- **India VIX** — reflects expected near-term volatility in Indian equities
+- **S&P 500** — tracks U.S. market sentiment, which frequently spills over into Asian markets the next trading session
+- **Nasdaq** — heavily tech-weighted, relevant given how much of NIFTY 50's movement is tied to IT and tech-adjacent stocks
+- **Gold Futures** — a traditional safe-haven asset; gold prices often move inversely to equity risk appetite
+- **Crude Oil Futures** — India is a major oil importer, so crude price swings directly affect inflation expectations and corporate costs across sectors
+- **USD/INR Exchange Rate** — currency depreciation/appreciation affects import costs, foreign investment flows, and IT/export-sector earnings
 
 Each of these contributes its own `Close` price, merged in as a separate column (e.g., `Close vix`, `Close snp`) alongside the main NIFTY 50 OHLCV data.
 
