@@ -1,6 +1,0 @@
-services:
-  - type: web
-    name: live-stock-forecast
-    runtime: docker
-    healthCheckPath: /health
-    plan: starter
