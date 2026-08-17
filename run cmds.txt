@@ -1,0 +1,6 @@
+cd "C:\Users\avnig\OneDrive\Desktop\stock price prediction"
+
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\.venv\Scripts\Activate.ps1
+
+python -m uvicorn app.main:app --reload
