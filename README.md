@@ -21,11 +21,17 @@ Primary ticker: `^NSEI (NIFTY 50)`
 Since Indian equity markets don't move in isolation from global markets, commodities, and currency movements, six supporting stocks are integrated the same way and merged into the main dataset by date:
 
 `India VIX (^INDIAVIX)` — reflects expected near-term volatility in Indian equities
+
 `S&P 500 (^GSPC)` — tracks U.S. market sentiment, which frequently spills over into Asian markets the next trading session
+
 `Nasdaq (^IXIC)` — heavily tech-weighted, relevant given how much of NIFTY 50's movement is tied to IT and tech-adjacent stocks
+
 `Gold Futures (GC=F)` — a traditional safe-haven asset; gold prices often move inversely to equity risk appetite
+
 `Crude Oil Futures (CL=F)` — India is a major oil importer, so crude price swings directly affect inflation expectations and corporate costs across sectors
+
 `USD/INR Exchange Rate (USDINR=X)` — currency depreciation/appreciation affects import costs, foreign investment flows, and IT/export-sector earnings
+
 Each of these contributes its own Close price, merged in as a separate column (e.g., Close `vix`, Close `snp`) alongside the main NIFTY 50 OHLCV data.
 
 Together, the full price dataset contains: Date, Open, High, Low, Close, Adjusted Close, Volume, and the six supporting Close columns above, spanning from 2013 through mid-2026 — long enough for a model to pick up on longer-term market behavior, not just short-term noise.
@@ -33,16 +39,22 @@ Together, the full price dataset contains: Date, Open, High, Low, Close, Adjuste
 News data — since price and volume alone can't capture why the market moved on a given day, we pulled in two supplementary datasets from Kaggle:
 
 NifSent50, a dataset of financial headlines tied to NIFTY 50 constituent companies
+
 FindKG (GDELT-based), a broader financial news and mentions dataset
+
 Headlines from both sources are combined into a single timeline, sentiment-scored, and merged into the main dataset by date.
 
 ## Data Preprocessing
 Before anything is modeled, the dataset goes through a cleanup pass:
 
 Checking for missing values and duplicate records
+
 Verifying correct data types (particularly making sure date columns are true datetime objects, not strings, which is a common cause of merge failure
+
 Confirming the data is sorted in chronological order
+
 Removing rows with zero trading volume (holidays/non-trading days that slip into the raw data)
+
 Once verified, technical indicators are engineered on top of the cleaned data, and any rows with missing values introduced by rolling-window calculations (e.g., the first 19 days before a 20-day moving average can be computed) are dropped.
 
 ## Feature Engineering
