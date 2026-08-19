@@ -130,13 +130,13 @@ XGBoost Regressor — a gradient-boosted tree model, typically strong on tabular
 ## Model Evaluation
 Each model's predictions are scored using:
 
-MAE (Mean Absolute Error) — average magnitude of error, in the same units as price
+- MAE (Mean Absolute Error) — average magnitude of error, in the same units as price
 
-MSE (Mean Squared Error) — penalises larger errors more heavily
+- MSE (Mean Squared Error) — penalises larger errors more heavily
 
-RMSE (Root Mean Squared Error) — same penalty behaviour as MSE, but back in interpretable price units
+- RMSE (Root Mean Squared Error) — same penalty behaviour as MSE, but back in interpretable price units
 
-R² Score — how much of the variance in closing price the model 
+- R² Score — how much of the variance in closing price the model 
 
 ## Tools and Libraries
 Python
