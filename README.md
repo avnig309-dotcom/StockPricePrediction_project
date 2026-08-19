@@ -139,19 +139,19 @@ Each model's predictions are scored using:
 - R² Score — how much of the variance in closing price the model 
 
 ## Tools and Libraries
-Python
+- Python
 
-Pandas, NumPy
+- Pandas, NumPy
 
-Matplotlib, Seaborn
+- Matplotlib, Seaborn
 
-yfinance
+- yfinance
 
-Scikit-learn
+- Scikit-learn
 
-XGBoost
+- XGBoost 
 
-TensorFlow / Keras
+- TensorFlow / Keras
 
 TA (Technical Analysis Library)
 
