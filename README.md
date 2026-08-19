@@ -105,19 +105,19 @@ The model predicts tomorrow's closing price, created by shifting the Close colum
 ## Exploratory Data Analysis
 A handful of visualizations help build intuition about the data before modelling:
 
-- ■ Closing price trend over time
+ ■ Closing price trend over time
 
-- ■ Trading volume trend
+ ■ Trading volume trend
 
-- ■ Distribution of closing prices
+ ■ Distribution of closing prices
 
-- ■ Correlation heatmap (useful for spotting redundant or highly collinear features)
+ ■ Correlation heatmap (useful for spotting redundant or highly collinear features)
 
-- ■ Boxplots for outlier detection
+ ■ Boxplots for outlier detection
 
-- ■ Daily return distribution
+ ■ Daily return distribution
 
-- ■ Actual vs. predicted closing prices (post-modelling)
+ ■ Actual vs. predicted closing prices (post-modelling)
 
 Machine Learning Models
 
